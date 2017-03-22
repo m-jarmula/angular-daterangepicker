@@ -143,10 +143,14 @@
           _picker = el.data('daterangepicker');
           results = [];
           for (eventType in opts.eventHandlers) {
-            results.push(el.on(eventType, function(e) {
+            results.push(el.on(eventType, function(e, datePicker) {
               var eventName;
               eventName = e.type + '.' + e.namespace;
-              return $scope.$evalAsync(opts.eventHandlers[eventName]);
+              if(datePicker){
+                return $scope.$evalAsync(opts.eventHandlers[eventName],datePicker);
+              } else {
+                return $scope.$evalAsync(opts.eventHandlers[eventName],datePicker);
+              }
             }));
           }
           return results;
